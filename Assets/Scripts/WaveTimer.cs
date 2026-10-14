@@ -6,6 +6,7 @@ public class WaveTimer : MonoBehaviour
 {
 
     public float timer = 5f;
+    public float redTimer = 2f;
     public bool waveActive = false;
 
     public TMP_Text timerText;
@@ -38,6 +39,13 @@ public class WaveTimer : MonoBehaviour
         }
 
 
+        while(redTimer > 0f){
+            redTimer -= Time.deltaTime;
+            timerText.color = Color.red;
+            yield return null;
+        }
+
+        timerText.color = Color.white;
 
         // Funkcija za spawnovanje neprijatelja
         Debug.Log("Proslo je vreme!!!!");
