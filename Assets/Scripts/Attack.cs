@@ -10,6 +10,8 @@ public class Attack : MonoBehaviour
     public float attackRange = 1.5f;
     public LayerMask enemyLayer;
 
+    public float attackDamage = 2f;
+
     private float nextAttackTime = 0f;
 
     void Update()
@@ -28,7 +30,13 @@ public void DealDamage()
 
     foreach (Collider hit in hits)
     {
-        Debug.Log("Udarac: " + hit.name);
+        EnemyHealth enemy = hit.GetComponentInChildren<EnemyHealth>();
+
+        if (enemy != null)
+        {
+            enemy.TakeDamage(attackDamage);
+            Debug.Log("Udarac: " + hit.name);
+        }
     }
 }
 

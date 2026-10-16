@@ -3,21 +3,39 @@ using UnityEngine.UI;
 
 public class EnemyHealth : MonoBehaviour
 {
-    public Camera camera;
-    public Transform target;
-
-
+    public Transform healthBarCanvas; // Canvas iznad glave (dete neprijatelja)
     public Slider slider;
 
-    public float enemyHealth;
-    public float enemyMaxHealth;
+    public float enemyMaxHealth = 10f;
+    private float enemyHealth;
+    private Camera cam;
 
-    public void UpdateHealthbar(float currentHealth, float maxHealth){
-        slider.value = currentHealth / maxHealth;
-    }
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        transform.rotation = Quaternion.LookRotation(transform.position  - camera.transform.position);
+        cam = Camera.main;
+        enemyHealth = enemyMaxHealth;
+        UpdateHealthbar();
+    }
+
+    public void TakeDamage(float damage)
+    {
+        enemyHealth = Mathf.Max(enemyHealth - damage, 0f);
+        UpdateHealthbar();
+
+        if (enemyHealth <= 0f)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    void UpdateHealthbar()
+    {
+        slider.value = enemyHealth / enemyMaxHealth;
+    }
+
+    void LateUpdate()
+    {
+        // Bar uvek gleda u istom smeru kao kamera (ne utiče na neprijatelja)
+        healthBarCanvas.rotation = cam.transform.rotation;
     }
 }
