@@ -9,7 +9,8 @@ public class FPMovement : MonoBehaviour
 
     public float health = 100;
 
-
+    [Header("Animation")]
+public Animator animator;
 
     public float speed = 5f;
     public float mouseSensitivity = 2f;
@@ -67,6 +68,9 @@ public class FPMovement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         controller.Move(move * speed * Time.deltaTime);
+
+        bool isWalking = move.sqrMagnitude > 0.01f && isGrounded;
+        animator.SetBool("isWalking", isWalking);
 
         // Skok je dozvoljen samo ako kartice NISU podignute
         if (Input.GetButtonDown("Jump") && isGrounded && !cardsUp)
