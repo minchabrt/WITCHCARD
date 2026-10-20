@@ -6,6 +6,8 @@ public class EnemyHealth : MonoBehaviour
     public Transform healthBarCanvas; // Canvas iznad glave (dete neprijatelja)
     public Slider slider;
 
+    public float target = 1;
+    public float reduceSpeed = 2;
     public float enemyMaxHealth = 10f;
     private float enemyHealth;
     private Camera cam;
@@ -14,6 +16,11 @@ public class EnemyHealth : MonoBehaviour
     {
         cam = Camera.main;
         enemyHealth = enemyMaxHealth;
+        UpdateHealthbar();
+    }
+
+    void Update()
+    {
         UpdateHealthbar();
     }
 
@@ -30,7 +37,8 @@ public class EnemyHealth : MonoBehaviour
 
     void UpdateHealthbar()
     {
-        slider.value = enemyHealth / enemyMaxHealth;
+        // Smoothly interpolate the slider value
+        slider.value = Mathf.MoveTowards(slider.value, enemyHealth / enemyMaxHealth, reduceSpeed * Time.deltaTime);
     }
 
     void LateUpdate()
