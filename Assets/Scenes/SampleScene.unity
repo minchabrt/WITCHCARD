@@ -2536,6 +2536,8 @@ MonoBehaviour:
   target: 1
   reduceSpeed: 5
   enemyMaxHealth: 10
+  damageEffect: {fileID: 19886758, guid: 8c27aeead6d968e4ba986702d6b84335, type: 3}
+  damageEffectRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1139433426
 GameObject:
   m_ObjectHideFlags: 0
