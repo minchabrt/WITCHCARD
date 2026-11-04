@@ -28,7 +28,6 @@ public class PlayerHealth : MonoBehaviour
     {
         playerHealth = Mathf.Max(playerHealth - damage, 0f);
         UpdateHealthbar();
-        RestartWhiteHealthDelay();
 
 
     }
@@ -37,33 +36,13 @@ public class PlayerHealth : MonoBehaviour
     {
         // Smoothly interpolate the slider value
         slider.value = Mathf.MoveTowards(slider.value, playerHealth / playerMaxHealth, reduceSpeed * Time.deltaTime);
+        whiteSlider.value = Mathf.MoveTowards(whiteSlider.value, playerHealth / playerMaxHealth, whiteReduceSpeed * Time.deltaTime);
     }
 
-    public float whiteHealthTime = 1f;
     public Slider whiteSlider;
-    private Coroutine whiteHealthCoroutine;
+    public float whiteReduceSpeed = 5f;
+    
 
-    void RestartWhiteHealthDelay()
-    {
-        if (whiteHealthCoroutine != null)
-        {
-            StopCoroutine(whiteHealthCoroutine);
-        }
-
-        whiteHealthCoroutine = StartCoroutine(WhiteHealthTime());
-    }
-
-    IEnumerator WhiteHealthTime()
-    {
-        yield return new WaitForSeconds(whiteHealthTime);
-
-        while (whiteSlider.value != slider.value)
-        {
-            whiteSlider.value = Mathf.MoveTowards(whiteSlider.value, slider.value, reduceSpeed * Time.deltaTime);
-            yield return null;
-        }
-
-        whiteHealthCoroutine = null;
-    }
+   
 
 }
